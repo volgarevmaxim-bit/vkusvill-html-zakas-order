@@ -1,0 +1,15 @@
+[Unit]
+Description=VkusVill Cart Server
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/vkusvill-server
+ExecStart=/opt/vkusvill-server/venv/bin/gunicorn -w 2 -b 0.0.0.0:8080 app:app
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
