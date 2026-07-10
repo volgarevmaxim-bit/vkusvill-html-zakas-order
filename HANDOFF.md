@@ -146,9 +146,9 @@ systemctl restart vkusvill-cart
 ### ✅ Убран stage из UI (2026-07-10)
 Технические метки (`substring_p2`, `alias`, `levenshtein`) больше не показываются в карточках товаров — только название. JS-шаблон в `app.py:110` убран `<span class="stage">`.
 
-### ✅ Бэкап (2026-07-10)
-- Сервер: `/opt/vkusvill-server-backup-20260710-1326.tar.gz` (6.4M)
-- Локально: `/opt/data/vkusvill-server/vkusvill-server-backup-20260710-1326.tar.gz`
+### ✅ Бэкап (v1: 2026-07-10, v2: 2026-07-10)
+- Сервер: `/opt/vkusvill-server-backup-20260710-1326.tar.gz` (v1, 6.4M), `/opt/vkusvill-server-backup-20260710-1855.tar.gz` (v2, 2.4M)
+- Локально: `/opt/data/vkusvill-server/vkusvill-server-backup-20260710-1326.tar.gz` (v1), `/opt/data/vkusvill-server/vkusvill-server-backup-20260710-1855.tar.gz` (v2)
 
 ### ✅ vkusvill-server-summary.md (2026-07-10)
 Итоговый документ: как заходить, что сделано, извлечённые уроки.
@@ -179,8 +179,12 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
   1. JS: `split(/[\s,\n]+/)` — равномерно по всем разделителям
   2. Python Stage 0: каждый query разбивается на отдельные слова
   3. Python Stage 2b: join-проход — если слово не смэтчилось, пробуем склеить с соседом
-     через match_all. Join только если xml_id отличается (защита от проглатывания)
-- тесты: «йогурт, нарзан мандарины» → 3 matched (было 2, мандарины терялись)
-  «хлеб бездрожжевой» → «бездрожжевой» в unmatched (join дал тот же xml_id — честно)
-  «нарзан сырники бефстроганов» → 2 matched + «сырники» в unmatched (нет в каталоге)
-- следующий шаг: git commit
+- следующий шаг: git commit ✅ (сделано 2026-07-10)
+
+## checkpoint 2026-07-10 18:55 — JS regex fix + бэкап v2
+- намерение: починить кнопку «Собрать корзину» (ничего не возвращала)
+- корневая причина: в Python triple-quoted строке `\n` → real newline (0x0A).
+  JS не разрешает переводы строк в regex-литерале → SyntaxError → doResolve undefined.
+- fix: `\\n` (два бэкслеша) в исходнике → Python отдаёт `\n` (бэкслеш+n) → JS ок.
+- бэкап: v2 (20260710-1855, 2.4M) на сервере и локально. v1 (20260710-1326, 6.4M) сохранён.
+- следующий шаг: ждать указаний пользователя
