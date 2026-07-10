@@ -147,8 +147,8 @@ systemctl restart vkusvill-cart
 Технические метки (`substring_p2`, `alias`, `levenshtein`) больше не показываются в карточках товаров — только название. JS-шаблон в `app.py:110` убран `<span class="stage">`.
 
 ### ✅ Бэкап (v1: 2026-07-10, v2: 2026-07-10)
-- Сервер: `/opt/vkusvill-server-backup-20260710-1326.tar.gz` (v1, 6.4M), `/opt/vkusvill-server-backup-20260710-1855.tar.gz` (v2, 2.4M)
-- Локально: `/opt/data/vkusvill-server/vkusvill-server-backup-20260710-1326.tar.gz` (v1), `/opt/data/vkusvill-server/vkusvill-server-backup-20260710-1855.tar.gz` (v2)
+- Сервер: `/opt/vkusvill-server-backups/vkusvill-server-backup-20260710-1326.tar.gz` (v1, 6.4M), `...-20260710-1855.tar.gz` (v2, 2.4M)
+- Локально: `/opt/data/vkusvill-server/backups/vkusvill-server-backup-20260710-1326.tar.gz` (v1), `...-20260710-1855.tar.gz` (v2)
 
 ### ✅ vkusvill-server-summary.md (2026-07-10)
 Итоговый документ: как заходить, что сделано, извлечённые уроки.
