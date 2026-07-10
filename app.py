@@ -95,11 +95,7 @@ async function doResolve() {
   go.disabled = true;
   spin.classList.add('active');
   try {
-    const items = q.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
-    if (items.length === 1 && items[0].includes(' ')) {
-      items.splice(0, 1, ...items[0].split(/\s+/).filter(s => s));
-    }
-    items.splice(20);
+    const items = q.split(/[\s,\n]+/).filter(s => s).slice(0, 20);
     const resp = await fetch('/api/resolve', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -193,77 +189,110 @@ def api_resolve():
     if not queries:
         return jsonify(error="empty items after dedup"), 400
 
-    # Split space-separated queries into individual words
-    # Only split when 3+ words (likely a list); 1-2 words stay intact
-    # so "хлеб бездрожжевой" remains one query.
-    expanded: list[str] = []
+    # ── Stage 0: split every query into individual words ──
+    # Client already splits by commas/newlines, but may send
+    # multi-word items like "нарзан мандарины" (no comma).
+    # Always normalize to individual tokens.
+    tokens: list[str] = []
+    seen_tokens = set()
     for q in queries:
-        words = q.split()
-        if len(words) >= 3:
-            for w in words:
-                w = w.strip().lower()
-                if w and w not in seen:
-                    seen.add(w)
-                    expanded.append(w)
-        else:
-            expanded.append(q)
-    queries = expanded
+        for w in q.split():
+            w = w.strip().lower()
+            if w and w not in seen_tokens:
+                seen_tokens.add(w)
+                tokens.append(w)
 
-    # Stage 1: quick-order resolver (instant, zero-token)
-    qo_result = resolve_all(queries)
-    resolved: list[dict] = qo_result["resolved"]
-    unresolved: list[str] = qo_result["unresolved"]
+    # ── Stage 1: quick-order (instant) ──
+    qo_result = resolve_all(tokens)
+    # resolved_by_idx[i] = match dict or None
+    resolved_by_idx: list[dict | str | None] = [None] * len(tokens)
+    for r in qo_result["resolved"]:
+        # Find the token index by query text
+        try:
+            idx = tokens.index(r["query"])
+            if r.get("product_id") and not r.get("xml_id"):
+                r["xml_id"] = r["product_id"]
+            resolved_by_idx[idx] = r
+        except ValueError:
+            pass
 
-    # Normalise: resolver returns product_id, match_all returns xml_id.
-    # Unify to xml_id for downstream consistency.
-    for r in resolved:
-        if r.get("product_id") and not r.get("xml_id"):
-            r["xml_id"] = r["product_id"]
-
-    # Stage 2: smart-cart match_all for unresolved
-    still_unresolved: list[str] = []
-    for q in unresolved:
-        m = match_all(q)
+    # ── Stage 2: match_all for unresolved tokens ──
+    for i, t in enumerate(tokens):
+        if resolved_by_idx[i] is not None:
+            continue
+        m = match_all(t)
         if m.get("winner"):
             w = m["winner"]
-            resolved.append({
-                "query": q,
+            resolved_by_idx[i] = {
+                "query": t,
                 "xml_id": w.get("xml_id"),
-                "name": w.get("name", q),
+                "name": w.get("name", t),
                 "stage": w.get("stage", "?"),
                 "q": 1,
-            })
-        else:
-            still_unresolved.append(q)
+            }
 
-    # Stage 2b: for space-separated queries that didn't match,
-    # try each word individually
-    retry_unresolved: list[str] = []
-    for q in still_unresolved:
-        if ' ' not in q:
-            retry_unresolved.append(q)
+    # ── Stage 2b: join unmatched words with neighbours ──
+    # If a word didn't match alone (often an adjective: "бездрожжевой",
+    # "топлёное", "творожные"), try joining with adjacent word(s).
+    # BUT: only join if the result is actually different — not just
+    # a substring match that swallows the unmatched word.
+    def _xml_id_of(r: dict | str | None) -> int | None:
+        if isinstance(r, dict):
+            return r.get("xml_id") or r.get("product_id")
+        return None
+
+    i = 0
+    while i < len(tokens):
+        if resolved_by_idx[i] is not None:
+            i += 1
             continue
-        words = q.split()
-        found_any = False
-        for w in words:
-            m = match_all(w)
-            if m.get("winner"):
-                found_any = True
-                winner = m["winner"]
-                resolved.append({
-                    "query": w,
-                    "xml_id": winner.get("xml_id"),
-                    "name": winner.get("name", w),
-                    "stage": winner.get("stage", "?"),
+        # tokens[i] is unmatched — try joining
+        # Try: prev + current
+        if i > 0 and resolved_by_idx[i-1] is not None:
+            prev_xml = _xml_id_of(resolved_by_idx[i-1])
+            phrase = tokens[i-1] + " " + tokens[i]
+            m = match_all(phrase)
+            w = m.get("winner")
+            if w and _xml_id_of(w) != prev_xml:
+                # Join found a DIFFERENT product — replace prev
+                resolved_by_idx[i-1] = {
+                    "query": phrase,
+                    "xml_id": w.get("xml_id"),
+                    "name": w.get("name", phrase),
+                    "stage": w.get("stage", "?"),
                     "q": 1,
-                })
-        if not found_any:
-            retry_unresolved.append(q)
-    still_unresolved = retry_unresolved
+                }
+                resolved_by_idx[i] = "__merged__"
+                i += 1
+                continue
+            # else: join matched the same product — don't swallow the word
+        # Try: current + next (both unmatched)
+        if i + 1 < len(tokens) and resolved_by_idx[i+1] is None:
+            phrase = tokens[i] + " " + tokens[i+1]
+            m = match_all(phrase)
+            w = m.get("winner")
+            if w:
+                resolved_by_idx[i] = {
+                    "query": phrase,
+                    "xml_id": w.get("xml_id"),
+                    "name": w.get("name", phrase),
+                    "stage": w.get("stage", "?"),
+                    "q": 1,
+                }
+                resolved_by_idx[i+1] = "__merged__"
+                i += 2
+                continue
+        i += 1
+
+    # ── Collect results ──
+    resolved = [r for r in resolved_by_idx if r is not None and r != "__merged__"]
+    still_unresolved = [tokens[i] for i, r in enumerate(resolved_by_idx) if r is None]
 
     # Build cart products list
     cart_products: list[dict] = []
     for r in resolved:
+        if not isinstance(r, dict):
+            continue
         xml_id = r.get("xml_id")
         if xml_id:
             cart_products.append({
