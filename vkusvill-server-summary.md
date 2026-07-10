@@ -32,9 +32,9 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41
 
 ### URL
 ```
-http://135.106.153.41
+https://vv.vedomir.ru
 ```
-Basic auth: `vv` / `8cZA5iB4WES7` (nginx).
+Basic auth: `vv` / `8cZA5iB4WES7` (nginx). Сертификат Let's Encrypt, авто-продление.
 
 ### Локальная копия
 ```
@@ -112,7 +112,7 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 - Убраны технические метки (`substring_p2`, `alias`, `levenshtein`) из карточек товаров — теперь только название продукта
 
 ### Что не сделано
-- **TLS / HTTPS** — сервер без домена, сертификат не настроен. При появлении домена: Let's Encrypt + certbot
+- ~~TLS / HTTPS~~ — **сделано 2026-07-10**: `https://vv.vedomir.ru`, Let's Encrypt, nginx SNI-роутинг
 - **Файрвол (ufw/iptables)** — не настроен. Пока достаточно nginx + basic auth
 
 ---

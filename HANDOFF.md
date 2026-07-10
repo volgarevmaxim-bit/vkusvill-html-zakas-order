@@ -13,7 +13,7 @@
 | systemd | `vkusvill-cart.service` — active, enabled, автозапуск |
 | Порт | 0.0.0.0:8080 (gunicorn -w 2) |
 | Nginx | ✅ настроен — порт 80, basic auth → proxy_pass 127.0.0.1:8080 |
-| URL | `http://135.106.153.41/` (basic auth) |
+| URL | `https://vv.vedomir.ru` (HTTP → HTTPS редирект) |
 
 ## API (работает)
 
@@ -64,8 +64,11 @@ JS-скрипт падал с SyntaxError на строке `q.split('\n')` → 
 
 ## Что НЕ сделано / на будущее
 
-### ❌ TLS / HTTPS
-Сервер без домена — HTTPS не настроен. При появлении домена: Let's Encrypt + certbot.
+### ✅ TLS / HTTPS (2026-07-10)
+- Домен: `vv.vedomir.ru` → A 135.106.153.41
+- Сертификат: Let's Encrypt (авто-продление)
+- Nginx stream SNI-роутинг на 443: `vv.vedomir.ru` → HTTPS 8443, всё остальное → xray 8444
+- HTTP (80): редирект на HTTPS
 
 ### ✅ Устаревшие xml_id (почищены 2026-07-10)
 
@@ -130,15 +133,19 @@ add_product(xml_id=12345, name='Новый товар', keys=['ключ1', 'кл
 systemctl restart vkusvill-cart
 ```
 
-## Nginx (сделано 2026-07-10)
+## Nginx (сделано 2026-07-10, обновлено 19:35)
 
 | Компонент | Статус |
 |---|---|
 | Nginx | 1.24.0, `systemctl enable --now` |
-| Порт 80 | 0.0.0.0:80 → proxy_pass 127.0.0.1:8080 |
-| Gunicorn | переключен на `127.0.0.1:8080` (не exposed) |
+| Порт 80 | 0.0.0.0:80 → 301 redirect на HTTPS |
+| Порт 443 | stream SNI-роутинг → HTTPS 8443 / xray 8444 |
+| HTTPS (внутр.) | 127.0.0.1:8443 → proxy_pass 127.0.0.1:8080 |
+| Gunicorn | `127.0.0.1:8080` (не exposed) |
 | Basic auth | `vv` / `8cZA5iB4WES7` |
-| Конфиг | `/etc/nginx/sites-available/vkusvill` |
+| Сертификат | Let's Encrypt, авто-продление, до 2026-10-08 |
+| Конфиг HTTP | `/etc/nginx/sites-available/vkusvill` |
+| Конфиг stream | `/etc/nginx/stream.d/vkusvill-sni.conf` |
 | htpasswd | `/etc/nginx/auth/vkusvill` |
 
 Сменить пароль: `htpasswd -b /etc/nginx/auth/vkusvill vv <новый>` → `systemctl reload nginx`.
@@ -152,6 +159,12 @@ systemctl restart vkusvill-cart
 
 ### ✅ vkusvill-server-summary.md (2026-07-10)
 Итоговый документ: как заходить, что сделано, извлечённые уроки.
+
+## checkpoint 2026-07-10 19:35 — TLS / HTTPS через nginx SNI-роутинг
+- намерение: поднять HTTPS на vv.vedomir.ru рядом с xray REALITY на 443
+- что сделано: certbot + Let's Encrypt, nginx stream SNI-роутинг (vv.vedomir.ru → HTTPS 8443, остальное → xray 8444)
+- текущее состояние: https://vv.vedomir.ru работает, сертификат валиден до 2026-10-08, авто-продление
+- следующий шаг: git commit
 
 ## Проверка после перезагрузки сервера
 
