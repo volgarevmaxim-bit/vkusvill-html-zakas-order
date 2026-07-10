@@ -95,7 +95,7 @@ async function doResolve() {
   go.disabled = true;
   spin.classList.add('active');
   try {
-    const items = q.split(/[\s,\n]+/).filter(s => s).slice(0, 20);
+    const items = q.split(/[\\s,\\n]+/).filter(s => s).slice(0, 20);
     const resp = await fetch('/api/resolve', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
