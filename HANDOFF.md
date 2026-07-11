@@ -262,3 +262,13 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 - 93f0756: авто-выбор не накапливает мусор от промежуточных нажатий (`_autoSelected`)
 - cdfd510: убраны qty-ряд (количество всегда 1), stage-метки на карточках, иконка поиска 🔍 (съезжала на Android/Edge), фикс скрытия «Ничего не найдено»
 - следующий шаг: ждать указаний пользователя
+
+## checkpoint 2026-07-11 20:18 — деплой на vv.vedomir.ru/select/ + PWA офлайн
+- намерение: сделать селектор доступным для друзей по ссылке (Android/iPhone)
+- что сделано:
+  - **Nginx**: `/select/` → статические файлы из `/opt/vkusvill-server/selector/`, без basic auth
+  - **Service Worker** (`sw.js`): кэширует index.html + manifest.json → офлайн после первого открытия
+  - Файлы на сервере: `index.html` (58K), `manifest.json`, `sw.js` → права 644
+  - `auth_basic` перенесён в `location /` — только API под паролем
+- **URL для друзей:** `https://vv.vedomir.ru/select/` — без пароля, PWA-установка, офлайн-каталог
+- следующий шаг: ждать указаний пользователя
