@@ -88,6 +88,11 @@ h1{color:#00d2a0;font-size:24px;text-align:center;margin:8px 0 4px}
 </style>
 </head>
 <body>
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/select/sw.js',{scope:'/select/'});
+}
+</script>
 <div class="app">
 <h1>🛒 ВкусВилл</h1>
 <div class="sub">Выбери продукты — получи ссылку на корзину</div>
