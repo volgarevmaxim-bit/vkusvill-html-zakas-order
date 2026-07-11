@@ -366,12 +366,18 @@ document.getElementById('tree').addEventListener('click',function(e){
 });
 
 // ── Search ──
+var _autoSelected={};
 document.getElementById('search').addEventListener('input',function(){
   var q=(document.getElementById('search').value||'').trim();
   var r=q?matchQuery(q):null;
   _lastMatchResult=r;
+  // Remove stale auto-selected items
+  for(var xid in _autoSelected){delete selected[xid];}
+  _autoSelected={};
+  // Auto-select new matches
   if(r){for(var i=0;i<r.matches.length;i++){
-    var m=r.matches[i];if(!selected[m.xml_id])selected[m.xml_id]=qty;
+    var m=r.matches[i];
+    if(!selected[m.xml_id]){selected[m.xml_id]=qty;_autoSelected[m.xml_id]=true;}
   }}
   renderQuickMatch();updateUI();renderTree();
 });
@@ -381,7 +387,8 @@ document.getElementById('search').addEventListener('keydown',function(e){
 
 // ── Clear ──
 document.getElementById('clearSel').addEventListener('click',function(){
-  selected={};document.getElementById('search').value='';updateUI();renderQuickMatch();renderTree();
+  selected={};_autoSelected={};
+document.getElementById('search').value='';updateUI();renderQuickMatch();renderTree();
 });
 
 // ── Qty ──
