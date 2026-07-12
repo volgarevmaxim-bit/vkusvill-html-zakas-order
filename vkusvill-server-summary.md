@@ -1,8 +1,9 @@
 # VkusVill Cart Server — итоговый обзор
 
-**Дата:** 2026-07-10 (обновлено 19:45 — vkusvill-selector)  
+**Дата:** 2026-07-12 (обновлено — GitHub-релиз, README, nginx fix)  
 **Сервер:** 135.106.153.41 (vps1-RU, Ubuntu 24.04)  
-**Бэкапы:** `backups/` — v1 (13:26, 6.4M), v2 (18:55, 2.4M)
+**GitHub:** [volgarevmaxim-bit/vkusvill-html-zakas-order](https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order) — 19 коммитов, релиз v1.0.0  
+**Бэкапы:** `backups/` — v1 (13:26, 6.4M), v2 (18:55, 2.4M), v4 (19:25, 72K)
 
 ---
 
@@ -78,6 +79,14 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 
 ---
 
+## GitHub
+
+Репозиторий: https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order
+
+19 коммитов, README с описанием проекта и промтом для кастомизации под свой список продуктов. Релиз v1.0.0.
+
+---
+
 ## Что сделано
 
 ### Инфраструктура (сессия 2026-07-10)
@@ -143,7 +152,14 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 - **iPhone Safari:** Share → «На экран Домой»
 - После установки: открывается как приложение, каталог работает офлайн (Service Worker)
 
-**Nginx:** `/select/` → статические файлы без auth, `/` → API под basic auth.
+**Nginx:** `/select/` → статические файлы без auth, `/` → API под basic auth. 2026-07-12 добавлен `auth_basic off;` — браузеры (особенно Edge) кэшируют 401 с корня и шлют credential prompt для `/select/`.
+
+### Как кастомизировать под свой список продуктов
+
+В README есть готовый промт для AI-агента (ChatGPT, Claude, Perplexity). Пользователь:
+1. Сохраняет историю покупок с `vkusvill.ru/goods/set-istoriya-pokupok/` (Ctrl+S → «Веб-страница, полностью»)
+2. Даёт агенту промт + сохранённый HTML + ссылки на репо и статью на Хабре
+3. Агент парсит историю, находит xml_id через MCP, генерирует персональный `vkusvill-selector.html`
 
 ---
 

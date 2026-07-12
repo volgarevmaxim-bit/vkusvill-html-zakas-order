@@ -1,8 +1,9 @@
 # VkusVill Cart Server — HANDOFF
 
-**Последняя сессия:** 2026-07-10 (vkusvill-selector: 2026-07-10 19:39–19:45)  
+**Последняя сессия:** 2026-07-12 (GitHub-релиз + README + nginx fix)  
 **Сервер:** vps1-RU / Delanie — 135.106.153.41 (Ubuntu 24.04)  
-**SSH:** `ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41`
+**SSH:** `ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41`  
+**GitHub:** [volgarevmaxim-bit/vkusvill-html-zakas-order](https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order) — 19 коммитов, релиз v1.0.0
 
 ## Состояние сервера
 
@@ -54,13 +55,20 @@ JS-скрипт падал с SyntaxError на строке `q.split('\n')` → 
 
 ### 5. match.py читал не тот prefs.json (2026-07-10)
 
-## Локальный репозиторий
+## Репозиторий
 
-**Путь:** `/opt/data/vkusvill-server/` (C:\vkusvill-server на Windows-хосте)
+**GitHub:** https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order  
+**Локально:** `/opt/data/vkusvill-server/` (C:\vkusvill-server на Windows-хосте)  
+**Git remote:** `origin` → `https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order.git`  
+**Токен:** см. `~/.git-credentials` (classic, repo, до 2026-08-11)
 
-Три файла изменены относительно исходного деплоя:
+Git identity: Maxim Volgarev / Volgarevmaxim@gmail.com.
+
+Ключевые файлы:
+- `vkusvill-selector.html` — основной автономный селектор (119 товаров, 12 категорий)
 - `mcp_client.py` — User-Agent + парсинг data.link + обработка ошибок
-- `app.py` — без изменений (как на сервере)
+- `app.py` — Flask-сервер (как на продакшене)
+- `README.md` — описание проекта + промт для кастомизации
 
 ## Что НЕ сделано / на будущее
 
@@ -271,4 +279,25 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
   - Файлы на сервере: `index.html` (58K), `manifest.json`, `sw.js` → права 644
   - `auth_basic` перенесён в `location /` — только API под паролем
 - **URL для друзей:** `https://vv.vedomir.ru/select/` — без пароля, PWA-установка, офлайн-каталог
+- следующий шаг: ждать указаний пользователя
+
+## checkpoint 2026-07-12 — nginx `auth_basic off` для /select
+
+- намерение: убрать запрос basic auth при открытии `/select/` в браузере
+- проблема: браузер кэширует 401 с `vv.vedomir.ru/` (основной location) и шлёт credential prompt для `/select/`, хотя nginx не требовал auth для этого location
+- fix: добавлен `auth_basic off;` в location `/select` — nginx явно говорит браузеру «здесь не нужна аутентификация»
+- результат: `curl -sI https://vv.vedomir.ru/select/` → 200 OK, без `WWW-Authenticate`
+
+## checkpoint 2026-07-12 — GitHub-релиз + README
+
+- намерение: опубликовать проект на GitHub, сделать релиз v1.0.0
+- что сделано:
+  - Репозиторий: `volgarevmaxim-bit/vkusvill-html-zakas-order` (публичный)
+  - 19 коммитов запушено (история с 10 по 12 июля)
+  - Релиз v1.0.0 с описанием проекта и ссылкой на живой сайт
+  - README.md: описание, API, структура, благодарности (статья ВкусВилл на Хабре)
+  - Раздел «Свой список продуктов»: промт для AI-агента + инструкция по сохранению истории покупок
+  - `.gitignore`: добавлен CSV с часто заказываемыми товарами
+  - 3 JSON-файла данных (categories, html5_data, merged_products) добавлены в репо
+- текущее состояние: репо живёт на GitHub, README готов, релиз опубликован
 - следующий шаг: ждать указаний пользователя
