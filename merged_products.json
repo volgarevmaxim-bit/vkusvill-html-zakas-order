@@ -1,0 +1,1006 @@
+{
+  "products": {
+    "21101": {
+      "xml_id": 21101,
+      "name": "Сок детский морковный с мякотью, 250 мл",
+      "keys": [
+        "морковный сок",
+        "сок морковный"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "56160": {
+      "xml_id": 56160,
+      "name": "Вода минеральная 'Нарзан' природной газации, 1 л",
+      "keys": [
+        "нарзан"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "69": {
+      "xml_id": 69,
+      "name": "Запеканка классическая",
+      "keys": [
+        "запеканка",
+        "запеканка творожная"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "732": {
+      "xml_id": 732,
+      "name": "Бифилайф детский \"Малина-шиповник\" 2,5%",
+      "keys": [
+        "бифилайф малина",
+        "бифилайф малина-шиповник"
+      ],
+      "rating": 5.0,
+      "source": "both"
+    },
+    "15257": {
+      "xml_id": 15257,
+      "name": "Бифилайф детский \"Яблоко-Банан\" 2,5%",
+      "keys": [
+        "бифилайф яблоко-банан",
+        "бифилайф банан"
+      ],
+      "rating": 5.0,
+      "source": "both"
+    },
+    "17148": {
+      "xml_id": 17148,
+      "name": "Творог с шоколадной крошкой 6,7%",
+      "keys": [
+        "творог с шоколадной крошкой",
+        "творог шоколадная крошка"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "31212": {
+      "xml_id": 31212,
+      "name": "Филе грудки куриное ГП",
+      "keys": [
+        "филе грудки",
+        "филе куриное",
+        "куриное филе"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "32059": {
+      "xml_id": 32059,
+      "name": "Биолакт детский с малиной 2,5%",
+      "keys": [
+        "биолакт малина",
+        "биолакт детский"
+      ],
+      "rating": 5.0,
+      "source": "both"
+    },
+    "66335": {
+      "xml_id": 66335,
+      "name": "Творог \"Пластовой\" обезжиренный, 250 г",
+      "keys": [
+        "творог пластовой",
+        "творог обезжиренный пластовой"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "69992": {
+      "xml_id": 69992,
+      "name": "Томаты сливка Фламенко, 450 г",
+      "keys": [
+        "томаты сливка",
+        "томаты фламенко",
+        "сливка фламенко"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "72476": {
+      "xml_id": 72476,
+      "name": "Сливки ультрапастеризованные 10%, 490 мл",
+      "keys": [
+        "сливки 10%",
+        "сливки ультрапастеризованные"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "75130": {
+      "xml_id": 75130,
+      "name": "Филе форели на пару",
+      "keys": [
+        "филе форели",
+        "форель на пару"
+      ],
+      "rating": 4.7,
+      "source": "both"
+    },
+    "75911": {
+      "xml_id": 75911,
+      "name": "Капуста молодая Узбекистан",
+      "keys": [
+        "капуста молодая",
+        "капуста узбекистан"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "82233": {
+      "xml_id": 82233,
+      "name": "Пирожное блинное шоколадное",
+      "keys": [
+        "пирожное блинное",
+        "блинное шоколадное"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "84054": {
+      "xml_id": 84054,
+      "name": "Творог рассыпчатый \"Вишня-брусника\" 4%",
+      "keys": [
+        "творог вишня-брусника",
+        "творог рассыпчатый вишня"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "86321": {
+      "xml_id": 86321,
+      "name": "Йогурт питьевой \"Яблоко-Груша\" 2,5%",
+      "keys": [
+        "йогурт яблоко-груша",
+        "йогурт питьевой"
+      ],
+      "rating": 5.0,
+      "source": "both"
+    },
+    "88363": {
+      "xml_id": 88363,
+      "name": "Мандарины крупные Азия",
+      "keys": [
+        "мандарины",
+        "мандарины азия"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "97075": {
+      "xml_id": 97075,
+      "name": "Оладьи куриные с кабачком, 130 г",
+      "keys": [
+        "оладьи куриные",
+        "оладьи с кабачком"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "98336": {
+      "xml_id": 98336,
+      "name": "Окорочок утиный с соевым соусом и чесноком",
+      "keys": [
+        "окорочок утиный",
+        "утиный окорочок"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "62810": {
+      "xml_id": 62810,
+      "name": "Бефстроганов, 360 г",
+      "keys": [
+        "бефстроганов"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "38076": {
+      "xml_id": 38076,
+      "name": "Котлеты из индейки \"Диетические\"",
+      "keys": [
+        "котлеты индейки",
+        "котлеты диетические"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "12304": {
+      "xml_id": 12304,
+      "name": "Котлеты из кролика",
+      "keys": [
+        "котлеты из кролика",
+        "котлеты кролик"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "21303": {
+      "xml_id": 21303,
+      "name": "Язык говяжий, замороженный",
+      "keys": [
+        "язык говяжий",
+        "язык замороженный"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "273": {
+      "xml_id": 273,
+      "name": "Творог детский 5%",
+      "keys": [
+        "творог детский",
+        "творог детский 5%"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "29450": {
+      "xml_id": 29450,
+      "name": "Яблоко Медовый хруст",
+      "keys": [
+        "яблоко медовый хруст",
+        "медовый хруст"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "41728": {
+      "xml_id": 41728,
+      "name": "Картофель молодой Египет",
+      "keys": [
+        "картофель молодой",
+        "картофель египет"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "36296": {
+      "xml_id": 36296,
+      "name": "Молоко 2,5% в бутылке, 900 мл",
+      "keys": [
+        "молоко 2.5",
+        "молоко в бутылке"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "72271": {
+      "xml_id": 72271,
+      "name": "Вырезка говяжья, вес",
+      "keys": [
+        "вырезка говяжья",
+        "вырезка говяжья вес"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "91448": {
+      "xml_id": 91448,
+      "name": "Капуста брокколи быстрозам., 1 кг",
+      "keys": [
+        "брокколи быстрозам",
+        "капуста брокколи"
+      ],
+      "rating": 5.0,
+      "source": "both"
+    },
+    "119570": {
+      "xml_id": 119570,
+      "name": "Огурцы с цветочком, 450 г",
+      "keys": [
+        "огурцы с цветочком",
+        "огурцы цветочек"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "83507": {
+      "xml_id": 83507,
+      "name": "Ватрушки-мини с творогом, 4 шт",
+      "keys": [
+        "ватрушки мини",
+        "ватрушки с творогом"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "68894": {
+      "xml_id": 68894,
+      "name": "Кабачки, 2 шт",
+      "keys": [
+        "кабачки",
+        "кабачки 2 шт"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "29566": {
+      "xml_id": 29566,
+      "name": "Йогурт высокобелковый 2,1%",
+      "keys": [
+        "йогурт высокобелковый",
+        "высокобелковый йогурт"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "102082": {
+      "xml_id": 102082,
+      "name": "Омлет с томатами и моцареллой",
+      "keys": [
+        "омлет с томатами",
+        "омлет моцарелла"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "22658": {
+      "xml_id": 22658,
+      "name": "Яйцо куриное С0",
+      "keys": [
+        "яйцо с0",
+        "яйцо куриное"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "116348": {
+      "xml_id": 116348,
+      "name": "Творог рассыпчатый \"Дыня медовая\" 4%",
+      "keys": [
+        "творог дыня медовая",
+        "творог дыня"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "118644": {
+      "xml_id": 118644,
+      "name": "Салат с огурцом, редисом и яйцом",
+      "keys": [
+        "салат огурец редис яйцо",
+        "салат с редисом"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "26198": {
+      "xml_id": 26198,
+      "name": "Изделие х/б \"Бородинский\" бездрожжевой",
+      "keys": [
+        "бородинский",
+        "бородинский хлеб",
+        "хлеб бородинский"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "38215": {
+      "xml_id": 38215,
+      "name": "Филе грудки цыпленка-бройлера \"Сливочно-пряный\"",
+      "keys": [
+        "филе сливочно-пряный",
+        "филе грудки сливочный"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "59796": {
+      "xml_id": 59796,
+      "name": "Фрикадельки из индейки",
+      "keys": [
+        "фрикадельки индейки",
+        "фрикадельки из индейки"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "61599": {
+      "xml_id": 61599,
+      "name": "Салат из летних овощей",
+      "keys": [
+        "салат из летних овощей",
+        "летний салат",
+        "салат летние овощи"
+      ],
+      "rating": 4.7,
+      "source": "both"
+    },
+    "63414": {
+      "xml_id": 63414,
+      "name": "\"Кебаб\" из мраморной говядины, 400 г",
+      "keys": [
+        "кебаб",
+        "кебаб из говядины",
+        "кебаб мраморная говядина"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "84055": {
+      "xml_id": 84055,
+      "name": "Творог рассыпчатый \"Черника-голубика\" 4%",
+      "keys": [
+        "творог черника-голубика",
+        "творог черника",
+        "творог голубика"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "115276": {
+      "xml_id": 115276,
+      "name": "Яйцо куриное С0 белое",
+      "keys": [
+        "яйцо с0 белое",
+        "яйцо белое с0",
+        "яйцо куриное белое"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "20234": {
+      "xml_id": 20234,
+      "name": "Салат Шпинат, 50 г",
+      "keys": [
+        "шпинат",
+        "салат шпинат",
+        "шпинат 50"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "28616": {
+      "xml_id": 28616,
+      "name": "Рис \"Жасмин\"",
+      "keys": [
+        "рис жасмин",
+        "жасмин рис",
+        "рис мистраль жасмин"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "67632": {
+      "xml_id": 67632,
+      "name": "Сахар-песок, 1 кг",
+      "keys": [
+        "сахар песок",
+        "сахар 1 кг",
+        "сахар-песок"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "71141": {
+      "xml_id": 71141,
+      "name": "Семга филе-кусок на коже зам., 500 г",
+      "keys": [
+        "семга",
+        "семга филе",
+        "семга замороженная",
+        "семга на коже"
+      ],
+      "rating": 4.8,
+      "source": "both"
+    },
+    "43447": {
+      "xml_id": 43447,
+      "name": "Вода питьевая Шишкин Лес негазированная 400 мл",
+      "keys": [
+        "шишкин лес",
+        "шишкин лес 400 мл",
+        "шишкин лес 400",
+        "вода шишкин лес",
+        "шишкин лес негазированная",
+        "shishkin les"
+      ],
+      "rating": 4.9,
+      "source": "both"
+    },
+    "43500": {
+      "xml_id": 43500,
+      "name": "Бумажные платочки носовые Zewa Deluxe 3-слойные уп/10 шт",
+      "keys": [
+        "zewa",
+        "zewa платочки",
+        "платочки zewa",
+        "платочки бумажные zewa",
+        "платочки носовые zewa",
+        "zewa deluxe"
+      ],
+      "rating": null,
+      "source": "prefs"
+    },
+    "20493": {
+      "xml_id": 20493,
+      "name": "Сок детский яблоко-морковь прямого отжима, 200 мл, 200 мл",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/sok-detskiy-yabloko-morkov-pryamogo-otzhima-20493/",
+      "source": "csv"
+    },
+    "94991": {
+      "xml_id": 94991,
+      "name": "Вода минеральная Нарзан природной газации 1,5 л, 1.5 л",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/voda-mineralnaya-narzan-prirodnoy-gazatsii-1-94991/",
+      "source": "csv"
+    },
+    "34835": {
+      "xml_id": 34835,
+      "name": "Салат \"Витаминный\" с лимонной заправкой, 150 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/salat-vitaminnyy-s-limonnoy-zapravkoy-34835/",
+      "source": "csv"
+    },
+    "22459": {
+      "xml_id": 22459,
+      "name": "Хлебцы \"Зерновые\", 260 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/khlebtsy-zernovye-22459/",
+      "source": "csv"
+    },
+    "108645": {
+      "xml_id": 108645,
+      "name": "Творожник с клубникой, 140 г, 140 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/tvorozhnik-s-klubnikoy-108645/",
+      "source": "csv"
+    },
+    "61785": {
+      "xml_id": 61785,
+      "name": "Творожник с черной смородиной, 140 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/tvorozhnik-s-chernoy-smorodinoy-61785/",
+      "source": "csv"
+    },
+    "76913": {
+      "xml_id": 76913,
+      "name": "Сливки ультрапастеризованные 10%, 208 г, 208 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/slivki-ultrapasterizovannye-10-76913/",
+      "source": "csv"
+    },
+    "50717": {
+      "xml_id": 50717,
+      "name": "Сочник с творогом, 2 шт, 180 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/sochnik-s-tvorogom-50717/",
+      "source": "csv"
+    },
+    "1573": {
+      "xml_id": 1573,
+      "name": "Сырок творожный с ванилью в молочном шоколаде 5%, 40 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/syrok-tvorozhnyy-s-vanilyu-v-molochnom-shokolade-5-1573/",
+      "source": "csv"
+    },
+    "1611": {
+      "xml_id": 1611,
+      "name": "Творог мягкий \"Злаки-ваниль\" 6%, 125 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/tvorog-myagkiy-zlaki-vanil-6-1611/",
+      "source": "csv"
+    },
+    "102655": {
+      "xml_id": 102655,
+      "name": "Яйцо куриное Село Зеленое С0 Деревенское столовое 15 шт, 1 уп",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/yaytso-kurinoe-selo-zelenoe-s0-derevenskoe-stolovoe-15-sht-102655/",
+      "source": "csv"
+    },
+    "25360": {
+      "xml_id": 25360,
+      "name": "Салат Винегрет без картофеля, 150 г",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/salat-vinegret-bez-kartofelya-25360/",
+      "source": "csv"
+    },
+    "36956": {
+      "xml_id": 36956,
+      "name": "Морковь мытая, 600 г, 600 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/morkov-mytaya-36956/",
+      "source": "csv"
+    },
+    "42105": {
+      "xml_id": 42105,
+      "name": "Сок Rich Яблоко 1 л, 1 л",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/sok-rich-yabloko-1-l-42105/",
+      "source": "csv"
+    },
+    "605": {
+      "xml_id": 605,
+      "name": "Лук репчатый",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/luk-repchatyy-605/",
+      "source": "csv"
+    },
+    "1067": {
+      "xml_id": 1067,
+      "name": "Филе бедра индейки",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/file-bedra-indeyki-1067/",
+      "source": "csv"
+    },
+    "28997": {
+      "xml_id": 28997,
+      "name": "Оладьи куриные, 160 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/oladi-kurinye-28997/",
+      "source": "csv"
+    },
+    "54709": {
+      "xml_id": 54709,
+      "name": "Мороженое Чистая линия Московская лакомка 80 г, 80 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/morozhenoe-chistaya-liniya-moskovskaya-lakomka-80-g-54709/",
+      "source": "csv"
+    },
+    "67492": {
+      "xml_id": 67492,
+      "name": "Рис с куриной бризолью, 200 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/ris-s-kurinoy-brizolyu-67492/",
+      "source": "csv"
+    },
+    "54727": {
+      "xml_id": 54727,
+      "name": "Молоко Parmalat Comfort Безлактозное 3,5% 1 л, 1 л",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/moloko-parmalat-comfort-bezlaktoznoe-3-54727/",
+      "source": "csv"
+    },
+    "67844": {
+      "xml_id": 67844,
+      "name": "Цикорий Экологика Здоровое питание 85 г, 85 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/tsikoriy-ekologika-zdorovoe-pitanie-85-g-67844/",
+      "source": "csv"
+    },
+    "99858": {
+      "xml_id": 99858,
+      "name": "Оладьи из тыквы, 150 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/oladi-iz-tykvy-99858/",
+      "source": "csv"
+    },
+    "22929": {
+      "xml_id": 22929,
+      "name": "Куриное филе запеченное с овощами, 210 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/kurinoe-file-zapechennoe-s-ovoshchami-22929/",
+      "source": "csv"
+    },
+    "47746": {
+      "xml_id": 47746,
+      "name": "Творожник с малиной, 140 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/tvorozhnik-s-malinoy-47746/",
+      "source": "csv"
+    },
+    "78565": {
+      "xml_id": 78565,
+      "name": "Жевательная резинка Orbit XXL Нежная мята 20,4 г, 20.4 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/zhevatelnaya-rezinka-orbit-xxl-nezhnaya-myata-20-78565/",
+      "source": "csv"
+    },
+    "33829": {
+      "xml_id": 33829,
+      "name": "Капуста цветная Бондюэль мини замороженная 300 г, 300 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/kapusta-tsvetnaya-bondyuel-mini-zamorozhennaya-300-g-33829/",
+      "source": "csv"
+    },
+    "95290": {
+      "xml_id": 95290,
+      "name": "Черешня Краснодар в ведерке, 400 г, 400 г",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/chereshnya-krasnodar-v-vederke-95290/",
+      "source": "csv"
+    },
+    "15786": {
+      "xml_id": 15786,
+      "name": "Салфетки бумажные 1 слой, 100 шт, 60 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/salfetki-bumazhnye-1-sloy-15786/",
+      "source": "csv"
+    },
+    "39291": {
+      "xml_id": 39291,
+      "name": "Кефир термостатный 3,2%, 450 г, 450 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/kefir-termostatnyy-3-39291/",
+      "source": "csv"
+    },
+    "44009": {
+      "xml_id": 44009,
+      "name": "Пюре фруктовое ФрутоНяня Яблоко с 4 месяцев 90 г, 90 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/pyure-fruktovoe-frutonyanya-yabloko-s-4-mesyatsev-90-g-44009/",
+      "source": "csv"
+    },
+    "19419": {
+      "xml_id": 19419,
+      "name": "Бедро цыпленка-бройлера бескостное (филе бедра)",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/bedro-tsyplenka-broylera-beskostnoe-file-bedra-19419/",
+      "source": "csv"
+    },
+    "19844": {
+      "xml_id": 19844,
+      "name": "Сливки питьевые 10% порционные, 100 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/slivki-pitevye-10-portsionnye-19844/",
+      "source": "csv"
+    },
+    "39477": {
+      "xml_id": 39477,
+      "name": "Запеканка творожная с грушей, 250 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/zapekanka-tvorozhnaya-s-grushey-39477/",
+      "source": "csv"
+    },
+    "33833": {
+      "xml_id": 33833,
+      "name": "Смесь овощная Бондюэль Летний дуэт замороженная 400 г, 400 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/smes-ovoshchnaya-bondyuel-letniy-duet-zamorozhennaya-400-g-33833/",
+      "source": "csv"
+    },
+    "43719": {
+      "xml_id": 43719,
+      "name": "Ежики мясные с отварной гречкой, 250 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/ezhiki-myasnye-s-otvarnoy-grechkoy-43719/",
+      "source": "csv"
+    },
+    "46100": {
+      "xml_id": 46100,
+      "name": "Пшено Мистраль Золотое 900 г, 900 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/psheno-mistral-zolotoe-900-g-46100/",
+      "source": "csv"
+    },
+    "55982": {
+      "xml_id": 55982,
+      "name": "Геркулес Русский продукт Детский с 3 лет 350 г, 350 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/gerkules-russkiy-produkt-detskiy-s-3-let-350-g-55982/",
+      "source": "csv"
+    },
+    "98344": {
+      "xml_id": 98344,
+      "name": "Торт \"Шоколадный микс\" (муссовый), 500 г, 500 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/tort-shokoladnyy-miks-mussovyy-98344/",
+      "source": "csv"
+    },
+    "29851": {
+      "xml_id": 29851,
+      "name": "Салат Шпинат, 125 г, 125 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/salat-shpinat-29851/",
+      "source": "csv"
+    },
+    "48042": {
+      "xml_id": 48042,
+      "name": "Йогурт питьевой Epica натуральный 2,9% 260 г, 260 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/yogurt-pitevoy-epica-naturalnyy-2-48042/",
+      "source": "csv"
+    },
+    "79663": {
+      "xml_id": 79663,
+      "name": "Вода питьевая негазированная, 5 л, 5 л",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/voda-pitevaya-negazirovannaya-79663/",
+      "source": "csv"
+    },
+    "106101": {
+      "xml_id": 106101,
+      "name": "Соус \"Дзадзики\", 170 г",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/sous-dzadziki-106101/",
+      "source": "csv"
+    },
+    "26797": {
+      "xml_id": 26797,
+      "name": "Творог обезжиренный, 180 г, 180 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/tvorog-obezzhirennyy-26797/",
+      "source": "csv"
+    },
+    "28804": {
+      "xml_id": 28804,
+      "name": "Замороженные кубики \"Имбирь-лимон\", 80 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/zamorozhennye-kubiki-imbir-limon-28804/",
+      "source": "csv"
+    },
+    "56175": {
+      "xml_id": 56175,
+      "name": "Смесь овощная \"Лечо по-венгерски\", быстрозамороженная, 400 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/smes-ovoshchnaya-lecho-po-vengerski-56175/",
+      "source": "csv"
+    },
+    "88860": {
+      "xml_id": 88860,
+      "name": "Азу из филе грудки индейки, 500 г, 500 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/azu-iz-file-grudki-indeyki-88860/",
+      "source": "csv"
+    },
+    "102354": {
+      "xml_id": 102354,
+      "name": "Салат с баклажанами и крем-чизом в азиатском соусе, 200 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/salat-s-baklazhanami-i-krem-chizom-v-aziatskom-souse-102354/",
+      "source": "csv"
+    },
+    "18941": {
+      "xml_id": 18941,
+      "name": "Картофель мытый фасованный, 2,5 кг, 2,5 кг",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/kartofel-mytyy-fasovannyy-18941/",
+      "source": "csv"
+    },
+    "41691": {
+      "xml_id": 41691,
+      "name": "Мясо бедра (филе бедра) индейки в маринаде \"Чесночный",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/myaso-bedra-file-bedra-indeyki-v-marinade-chesnochnyy-41691/",
+      "source": "csv"
+    },
+    "43310": {
+      "xml_id": 43310,
+      "name": "Чай черный Greenfield Golden Ceylon пакетированный 25х2 г, 50 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/chay-chernyy-greenfield-golden-ceylon-paketirovannyy-25kh2-g-43310/",
+      "source": "csv"
+    },
+    "67009": {
+      "xml_id": 67009,
+      "name": "Сметана 10%, 200 г, 200 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/smetana-10-67009/",
+      "source": "csv"
+    },
+    "75484": {
+      "xml_id": 75484,
+      "name": "Огурчики с грядки, 300 г, 300 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/ogurchiki-s-gryadki-75484/",
+      "source": "csv"
+    },
+    "1010": {
+      "xml_id": 1010,
+      "name": "Творог детский \"Груша\" 4,2%, 100 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/tvorog-detskiy-grusha-4-1010/",
+      "source": "csv"
+    },
+    "23071": {
+      "xml_id": 23071,
+      "name": "Масло крестьянское 72,5%, 200 г, 200 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/maslo-krestyanskoe-72-23071/",
+      "source": "csv"
+    },
+    "34161": {
+      "xml_id": 34161,
+      "name": "Томаты розовые Дагестан",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/tomaty-rozovye-dagestan-34161/",
+      "source": "csv"
+    },
+    "35889": {
+      "xml_id": 35889,
+      "name": "Масло подсолнечное Слобода рафинированное дезодорированное 1 л, 1 л",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/maslo-podsolnechnoe-sloboda-rafinirovannoe-dezodorirovannoe-1-l-35889/",
+      "source": "csv"
+    },
+    "38253": {
+      "xml_id": 38253,
+      "name": "Запеканка творожная с клубникой без добавленного сахара, 220 г",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/zapekanka-tvorozhnaya-s-klubnikoy-bez-dobavlennogo-sakhara-38253/",
+      "source": "csv"
+    },
+    "49992": {
+      "xml_id": 49992,
+      "name": "Перец красный сладкий, 500 г, 500 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/perets-krasnyy-sladkiy-49992/",
+      "source": "csv"
+    },
+    "53013": {
+      "xml_id": 53013,
+      "name": "Печенье \"Полезный завтрак\" с медом и овс. хлопьями, 155 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/pechene-poleznyy-zavtrak-s-medom-i-ovs-khlopyami-53013/",
+      "source": "csv"
+    },
+    "55972": {
+      "xml_id": 55972,
+      "name": "Геркулес Русский продукт Монастырский 500 г, 500 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/gerkules-russkiy-produkt-monastyrskiy-500-g-55972/",
+      "source": "csv"
+    },
+    "61602": {
+      "xml_id": 61602,
+      "name": "Суп с куриными фрикадельками и пастой \"Звездочки\", 300 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/sup-s-kurinymi-frikadelkami-i-pastoy-zvezdochki-61602/",
+      "source": "csv"
+    },
+    "62125": {
+      "xml_id": 62125,
+      "name": "Свекла молодая, 600 г, 600 г",
+      "rating": 4.8,
+      "url": "https://vkusvill.ru/goods/svekla-molodaya-62125/",
+      "source": "csv"
+    },
+    "64336": {
+      "xml_id": 64336,
+      "name": "Картофель молодой",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/kartofel-molodoy-64336/",
+      "source": "csv"
+    },
+    "76467": {
+      "xml_id": 76467,
+      "name": "Сок лимона Азбука Продуктов 100% натуральный 200 мл Италия, 200 мл",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/sok-limona-azbuka-produktov-100-naturalnyy-200-ml-italiya-76467/",
+      "source": "csv"
+    },
+    "79208": {
+      "xml_id": 79208,
+      "name": "Салат из свеклы с черносливом и грецкими орехами, 150 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/salat-iz-svekly-s-chernoslivom-i-gretskimi-orekhami-79208/",
+      "source": "csv"
+    },
+    "79585": {
+      "xml_id": 79585,
+      "name": "Сахар белый кусковой, 500 г, 500 г",
+      "rating": 5.0,
+      "url": "https://vkusvill.ru/goods/sakhar-belyy-kuskovoy-79585/",
+      "source": "csv"
+    },
+    "89458": {
+      "xml_id": 89458,
+      "name": "Салат \"Коул Слоу\" постный, 140 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/salat-koul-slou-postnyy-89458/",
+      "source": "csv"
+    },
+    "21335": {
+      "xml_id": 21335,
+      "name": "Томаты розовые Азербайджан",
+      "rating": 4.7,
+      "url": "https://vkusvill.ru/goods/tomaty-rozovye-azerbaydzhan-21335/",
+      "source": "csv"
+    },
+    "31777": {
+      "xml_id": 31777,
+      "name": "Тыква кубиками Айс, 400 г",
+      "rating": 4.9,
+      "url": "https://vkusvill.ru/goods/tykva-kubikami-ays-31777/",
+      "source": "csv"
+    }
+  },
+  "total": 119
+}
