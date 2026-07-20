@@ -195,17 +195,19 @@ document.getElementById('cartBtn').addEventListener('click',function(){
   var res=document.getElementById('result');
   btn.disabled=true;spin.classList.add('on');res.innerHTML='';
   mcpCall('vkusvill_cart_link_create',{products:prods},function(err,raw){
-    spin.classList.remove('on');btn.disabled=false;
-    if(err){res.innerHTML='<div class="err">'+esc(err)+'</div>';return;}
+    spin.classList.remove('on');
+    if(err){btn.disabled=false;res.innerHTML='<div class="err">'+esc(err)+'</div>';return;}
     try{
       var url=parseCartLink(raw);
       if(url){
+        btn.style.display='none';
         res.innerHTML='<a href="'+url+'" target="_blank" rel="noopener">🛍 Открыть корзину ('+prods.length+' тов.) →</a>';
         if(navigator.clipboard)navigator.clipboard.writeText(url).catch(function(){});
       }else{
+        btn.disabled=false;
         res.innerHTML='<div class="err">Не удалось создать корзину</div>';
       }
-    }catch(e){res.innerHTML='<div class="err">Ошибка: '+esc(e.message||String(e))+'</div>';}
+    }catch(e){btn.disabled=false;res.innerHTML='<div class="err">Ошибка: '+esc(e.message||String(e))+'</div>';}
   });
 });
 
