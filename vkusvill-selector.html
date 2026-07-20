@@ -28,19 +28,6 @@ h1{color:#00d2a0;font-size:24px;text-align:center;margin:8px 0 4px}
 .sel-bar .clear{font-size:12px;color:#888;background:none;border:1px solid #444;
   border-radius:6px;padding:4px 10px;cursor:pointer;white-space:nowrap}
 .sel-bar .clear:active{background:#333}
-.list{max-height:calc(100vh - 260px);overflow-y:auto;-webkit-overflow-scrolling:touch;
-  border-radius:10px;background:#16213e;padding:4px 0}
-.row{display:flex;align-items:center;padding:10px 12px;gap:8px;
-  cursor:pointer;min-height:44px;border-bottom:1px solid rgba(255,255,255,0.03)}
-.row:active{background:rgba(0,210,160,0.08)}
-.row.sel{border-left:3px solid #00d2a0;padding-left:9px}
-.cb{width:20px;height:20px;border:2px solid #555;border-radius:5px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  font-size:12px;color:#00d2a0;transition:all .15s}
-.row.sel .cb{background:#00d2a0;border-color:#00d2a0;color:#1a1a2e}
-.name{flex:1;font-size:14px;line-height:1.4}
-.no-match{text-align:center;color:#888;padding:24px;font-size:14px;display:none}
-.no-match.show{display:block}
 .bottom{position:fixed;bottom:0;left:0;right:0;background:#1a1a2e;
   padding:10px 12px;border-top:1px solid #333;z-index:10}
 .bottom-inner{max-width:600px;margin:0 auto}
@@ -65,14 +52,12 @@ if('serviceWorker' in navigator){
 </script>
 <div class="app">
 <h1>🛒 ВкусВилл</h1>
-<div class="sub">Выбери продукты — получи ссылку на корзину</div>
+<div class="sub">Введи название — Enter — готово</div>
 <input type="search" id="search" placeholder="Поиск по товарам..." autocomplete="off" enterkeyhint="done">
 <div class="sel-bar" id="selBar">
   <span class="count" id="selCount">0 товаров</span>
   <button class="clear" id="clearSel">✕ Сбросить</button>
 </div>
-<div class="list" id="list"></div>
-<div class="no-match" id="noMatch">Ничего не найдено</div>
 </div>
 <div class="bottom" id="bottom">
   <div class="bottom-inner">
@@ -91,29 +76,41 @@ var selected = {};
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
-function getProducts(){
-  var q=(document.getElementById('search').value||'').trim().toLowerCase();
-  var result=[];
+// Find best product match for a query
+function findBest(query){
+  var q=query.toLowerCase().trim();
+  if(!q)return null;
+  
+  // Stage 1: alias exact match
+  if(DATA.aliases&&DATA.aliases[q]&&DATA.aliases[q].length){
+    var xid=''+DATA.aliases[q][0];
+    var p=DATA.products[xid];
+    if(p)return {id:xid, name:p.name, stage:'alias'};
+  }
+  
+  // Stage 2: substring match — pick shortest name (most specific)
+  var matches=[];
   for(var xid in DATA.products){
     var p=DATA.products[xid];
-    if(!q||p.name.toLowerCase().indexOf(q)!==-1)result.push(p);
+    if(p.name.toLowerCase().indexOf(q)!==-1)matches.push({id:xid, name:p.name});
   }
-  return result;
-}
-
-function renderList(){
-  var products=getProducts();
-  var list=document.getElementById('list');
-  var nm=document.getElementById('noMatch');
-  var h='';
-  for(var i=0;i<products.length;i++){
-    var p=products[i],sid=''+p.id,sel=!!selected[sid];
-    h+='<div class="row'+(sel?' sel':'')+'" data-xid="'+sid+'">'+
-      '<span class="cb">'+(sel?'✓':'')+'</span>'+
-      '<span class="name">'+esc(p.name)+'</span></div>';
+  if(matches.length===1)return {id:matches[0].id, name:matches[0].name, stage:'substr'};
+  if(matches.length>1){
+    matches.sort(function(a,b){return a.name.length-b.name.length;});
+    return {id:matches[0].id, name:matches[0].name, stage:'substr'};
   }
-  list.innerHTML=h||'';
-  nm.className='no-match'+(products.length?'':' show');
+  
+  // Stage 3: word-prefix match
+  for(var xid in DATA.products){
+    var words=DATA.products[xid].name.toLowerCase().split(/[\s,()«»"'.\-/]+/);
+    for(var i=0;i<words.length;i++){
+      if(words[i]&&words[i].indexOf(q)===0){
+        return {id:xid, name:DATA.products[xid].name, stage:'word'};
+      }
+    }
+  }
+  
+  return null;
 }
 
 function updateUI(){
@@ -134,25 +131,30 @@ function updateUI(){
   }
 }
 
-document.getElementById('list').addEventListener('click',function(e){
-  var row=e.target.closest('.row');
-  if(!row)return;
-  var xid=row.getAttribute('data-xid');
-  if(selected[xid]){delete selected[xid];}else{selected[xid]=1;}
-  updateUI();renderList();
-});
-
-document.getElementById('search').addEventListener('input',function(){
-  renderList();
-});
+// Enter → auto-select best match
 document.getElementById('search').addEventListener('keydown',function(e){
-  if(e.key==='Enter'){e.preventDefault();this.blur();document.getElementById('cartBtn').focus();}
+  if(e.key!=='Enter')return;
+  e.preventDefault();
+  var q=this.value.trim();
+  if(!q)return;
+  var m=findBest(q);
+  var s=this;
+  if(m){
+    if(!selected[m.id])selected[m.id]=1;
+    updateUI();
+    s.placeholder='\u2713 '+m.name;
+  }else{
+    s.placeholder='\u2717 Не найдено: '+q;
+  }
+  this.value='';
+  setTimeout(function(){s.placeholder='Поиск по товарам...';},2500);
+  this.blur();
 });
 
 document.getElementById('clearSel').addEventListener('click',function(){
   selected={};
   document.getElementById('search').value='';
-  updateUI();renderList();
+  updateUI();
 });
 
 var MCP_URL='https://mcp001.vkusvill.ru/mcp';
@@ -207,7 +209,7 @@ document.getElementById('cartBtn').addEventListener('click',function(){
   });
 });
 
-renderList();updateUI();
+updateUI();
 })();
 </script>
 </body>
