@@ -68,23 +68,6 @@ h1{color:#00d2a0;font-size:24px;text-align:center;margin:8px 0 4px}
 .no-match{text-align:center;color:#888;padding:24px;font-size:14px;display:none}
 .no-match.show{display:block}
 
-/* Quick match */
-.qmatch{display:none;margin-bottom:8px}
-.qmatch.on{display:block}
-.qmatch .qm-title{font-size:12px;color:#888;margin-bottom:6px;padding:0 4px}
-.qmatch-card{display:flex;align-items:center;padding:8px 10px;margin-bottom:4px;
-  background:#16213e;border-radius:8px;gap:8px;cursor:pointer;
-  border:1px solid transparent;transition:border-color .15s}
-.qmatch-card:active{background:rgba(0,210,160,0.06)}
-.qmatch-card.sel{border-color:#00d2a0}
-.qmatch-card .qm-cb{width:18px;height:18px;border:2px solid #555;border-radius:4px;
-  flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px}
-.qmatch-card.sel .qm-cb{background:#00d2a0;border-color:#00d2a0;color:#1a1a2e}
-.qmatch-card .qm-name{flex:1;font-size:14px;line-height:1.3}
-.qmatch-card .qm-remove{font-size:18px;color:#ff6b6b;cursor:pointer;padding:0 4px;display:none}
-.qmatch-card.sel .qm-remove{display:block}
-.qm-unmatched{font-size:12px;color:#ff6b6b;padding:4px 8px}
-
 </style>
 </head>
 <body>
@@ -97,8 +80,7 @@ if('serviceWorker' in navigator){
 <h1>🛒 ВкусВилл</h1>
 <div class="sub">Выбери продукты — получи ссылку на корзину</div>
 <div class="search-wrap">
-  <input type="search" id="search" placeholder="Введи продукты: нарзан йогурт мандарин..." autocomplete="off" enterkeyhint="done">
-<div class="qmatch" id="qmatch"></div>
+  <input type="search" id="search" placeholder="Поиск по товарам..." autocomplete="off" enterkeyhint="done">
 </div>
 <div class="sel-bar" id="selBar">
   <span class="count" id="selCount">0 товаров</span>
@@ -133,79 +115,11 @@ var DATA={"products":{"21101":{"id":21101,"name":"Сок детский морк
   }
 })();
 
-// ── Matching engine ──
-function matchOne(token){
-  var t=token.toLowerCase().trim();
-  if(!t)return null;
-  var al=DATA.aliases[t];
-  if(al&&al.length>=1){
-    var p=DATA.products[al[0]];
-    return p?{xml_id:al[0],name:p.name,stage:'alias'}:null;
-  }
-  var matches=[];
-  for(var xid in DATA._names){
-    if(DATA._names[xid].indexOf(t)!==-1)matches.push(parseInt(xid));
-  }
-  if(matches.length===1){
-    var p=DATA.products[matches[0]];
-    return p?{xml_id:matches[0],name:p.name,stage:'substr'}:null;
-  }
-  if(matches.length>1){
-    var best=null,bestLen=999;
-    for(var i=0;i<matches.length;i++){
-      var p=DATA.products[matches[i]];
-      if(p&&p.name.length<bestLen){best={xml_id:matches[i],name:p.name,stage:'substr'};bestLen=p.name.length;}
-    }
-    return best;
-  }
-  var wordMatches=[];
-  for(var xid in DATA._words){
-    var words=DATA._words[xid];
-    for(var i=0;i<words.length;i++){
-      if(words[i]===t||words[i].indexOf(t)===0){wordMatches.push(parseInt(xid));break;}
-    }
-  }
-  if(wordMatches.length>=1){
-    var p=DATA.products[wordMatches[0]];
-    return p?{xml_id:wordMatches[0],name:p.name,stage:'word'}:null;
-  }
-  return null;
-}
-
-function matchQuery(text){
-  var tokens=text.split(/[\s,\n]+/).filter(function(t){return t.length>0;});
-  var results={matches:[],unmatched:[],seen:{}};
-  for(var i=0;i<tokens.length;i++){
-    var m=matchOne(tokens[i]);
-    if(m){
-      if(!results.seen[m.xml_id]){
-        results.seen[m.xml_id]=true;
-        m._token=tokens[i];
-        results.matches.push(m);
-      }
-    }else{results.unmatched.push({idx:i,token:tokens[i]});}
-  }
-  for(var i=0;i<results.unmatched.length;i++){
-    var u=results.unmatched[i];
-    if(u.idx>0){
-      var bigram=tokens[u.idx-1]+' '+u.token;
-      var m=matchOne(bigram);
-      if(m&&!results.seen[m.xml_id]){results.seen[m.xml_id]=true;results.matches.push(m);continue;}
-    }
-    if(u.idx<tokens.length-1){
-      var bigram=u.token+' '+tokens[u.idx+1];
-      var m=matchOne(bigram);
-      if(m&&!results.seen[m.xml_id]){results.seen[m.xml_id]=true;results.matches.push(m);continue;}
-    }
-  }
-  return results;
-}
-
+// ── State ──
 (function(){
 "use strict";
 var selected = {};
 var expanded = {};
-var qty = 1; // unused, kept for compat
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 
@@ -283,57 +197,6 @@ function updateUI(){
   }
 }
 
-// ── Quick match rendering ──
-var _lastMatchResult=null;
-function renderQuickMatch(){
-  var q=(document.getElementById('search').value||'').trim();
-  var panel=document.getElementById('qmatch');
-  var tree=document.getElementById('tree');
-  var nm=document.getElementById('noMatch');
-  if(!q){
-    panel.classList.remove('on');panel.innerHTML='';
-    tree.style.display='';nm.classList.remove('show');
-    _lastMatchResult=null;return;
-  }
-  var r=_lastMatchResult||matchQuery(q);
-  _lastMatchResult=r;
-  var h='';
-  if(r.matches.length){
-    h+='<div class="qm-title">Найдено: '+r.matches.length+' товаров</div>';
-    for(var i=0;i<r.matches.length;i++){
-      var m=r.matches[i],sid=''+m.xml_id,sel=!!selected[sid];
-      h+='<div class="qmatch-card'+(sel?' sel':'')+'" data-xid="'+sid+'">'+
-        '<span class="qm-cb">'+(sel?'✓':'')+'</span>'+
-        '<span class="qm-name">'+esc(m.name)+'</span>'+
-        '<span class="qm-remove">✕</span></div>';
-    }
-  }
-  if(r.unmatched.length){
-    var uu=[];for(var i=0;i<r.unmatched.length;i++)uu.push(r.unmatched[i].token);
-    h+='<div class="qm-unmatched">⚠ Не найдено: '+esc(uu.join(', '))+'</div>';
-  }
-  panel.innerHTML=h;
-  panel.classList.add('on');
-  tree.style.display='none';
-  nm.classList.remove('show');
-  if(!r.matches.length&&r.unmatched.length){
-    nm.textContent='Ничего не найдено: '+esc(r.unmatched.map(function(u){return u.token;}).join(', '));
-    nm.classList.add('show');
-  } else {
-    nm.classList.remove('show');
-  }
-}
-
-// ── Quick match panel click ──
-document.getElementById('qmatch').addEventListener('click',function(e){
-  var card=e.target.closest('.qmatch-card');
-  if(!card)return;
-  var xid=card.getAttribute('data-xid');
-  if(e.target.classList.contains('qm-remove')){delete selected[xid];}
-  else{if(selected[xid]){delete selected[xid];}else{selected[xid]=1;}}
-  updateUI();renderQuickMatch();renderTree();
-});
-
 // ── Event delegation on tree ──
 document.getElementById('tree').addEventListener('click',function(e){
   var row=e.target.closest('.tree-row');
@@ -356,20 +219,8 @@ document.getElementById('tree').addEventListener('click',function(e){
 });
 
 // ── Search ──
-var _autoSelected={};
 document.getElementById('search').addEventListener('input',function(){
-  var q=(document.getElementById('search').value||'').trim();
-  var r=q?matchQuery(q):null;
-  _lastMatchResult=r;
-  // Remove stale auto-selected items
-  for(var xid in _autoSelected){delete selected[xid];}
-  _autoSelected={};
-  // Auto-select new matches
-  if(r){for(var i=0;i<r.matches.length;i++){
-    var m=r.matches[i];
-    if(!selected[m.xml_id]){selected[m.xml_id]=1;_autoSelected[m.xml_id]=true;}
-  }}
-  renderQuickMatch();updateUI();renderTree();
+  renderTree();
 });
 document.getElementById('search').addEventListener('keydown',function(e){
   if(e.key==='Enter'){e.preventDefault();this.blur();document.getElementById('cartBtn').focus();}
@@ -377,8 +228,9 @@ document.getElementById('search').addEventListener('keydown',function(e){
 
 // ── Clear ──
 document.getElementById('clearSel').addEventListener('click',function(){
-  selected={};_autoSelected={};
-document.getElementById('search').value='';updateUI();renderQuickMatch();renderTree();
+  selected={};
+  document.getElementById('search').value='';
+  updateUI();renderTree();
 });
 
 
