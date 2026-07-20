@@ -86,25 +86,21 @@ function findBest(query){
     if(matches.length)return {matches:matches, stage:'alias'};
   }
   
-  // Stage 2: substring match — pick shortest name (most specific)
-  var substrs=[];
+  // Stage 2: word-boundary match — query must be at the start of a word in the product name
+  var wordMatches=[];
   for(var xid in DATA.products){
     var p=DATA.products[xid];
-    if(p.name.toLowerCase().indexOf(q)!==-1)substrs.push({id:xid, name:p.name});
-  }
-  if(substrs.length>=1){
-    substrs.sort(function(a,b){return a.name.length-b.name.length;});
-    return {matches:[substrs[0]], stage:'substr'};
-  }
-  
-  // Stage 3: word-prefix match
-  for(var xid in DATA.products){
-    var words=DATA.products[xid].name.toLowerCase().split(/[\s,()«»"'.\-/]+/);
+    var words=p.name.toLowerCase().split(/[\s,()«»"'.\\/,-]+/);
     for(var i=0;i<words.length;i++){
       if(words[i]&&words[i].indexOf(q)===0){
-        return {matches:[{id:xid, name:DATA.products[xid].name}], stage:'word'};
+        wordMatches.push({id:xid, name:p.name});
+        break;
       }
     }
+  }
+  if(wordMatches.length>=1){
+    wordMatches.sort(function(a,b){return a.name.length-b.name.length;});
+    return {matches:[wordMatches[0]], stage:'word'};
   }
   
   return null;
@@ -128,14 +124,29 @@ function updateUI(){
   }
 }
 
-// Enter → auto-select best match(es)
+// Enter → auto-select best match(es), supports multi-word queries
 document.getElementById('search').addEventListener('keydown',function(e){
   if(e.key!=='Enter')return;
   e.preventDefault();
   var q=this.value.trim();
   if(!q)return;
-  var result=findBest(q);
   var s=this;
+  // Try whole query first, then split by spaces
+  var result=findBest(q);
+  if(!result){
+    var tokens=q.toLowerCase().split(/[\s,\n]+/).filter(function(t){return t.length>0;});
+    var allMatches=[], seen={};
+    for(var t=0;t<tokens.length;t++){
+      var r=findBest(tokens[t]);
+      if(r){
+        for(var i=0;i<r.matches.length;i++){
+          var m=r.matches[i];
+          if(!seen[m.id]){seen[m.id]=true; allMatches.push(m);}
+        }
+      }
+    }
+    if(allMatches.length)result={matches:allMatches, stage:'multi'};
+  }
   if(result){
     var names=[];
     for(var i=0;i<result.matches.length;i++){

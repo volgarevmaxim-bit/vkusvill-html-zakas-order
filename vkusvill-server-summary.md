@@ -1,6 +1,6 @@
 # VkusVill Cart Server — итоговый обзор
 
-**Дата:** 2026-07-12 (обновлено — GitHub-релиз, README, nginx fix)  
+**Дата:** 2026-07-12 (обновлено — фикс «Ничего не найдено» + SW cache bust)  
 **Сервер:** 135.106.153.41 (vps1-RU, Ubuntu 24.04)  
 **GitHub:** [volgarevmaxim-bit/vkusvill-html-zakas-order](https://github.com/volgarevmaxim-bit/vkusvill-html-zakas-order) — 19 коммитов, релиз v1.0.0  
 **Бэкапы:** `backups/` — v1 (13:26, 6.4M), v2 (18:55, 2.4M), v4 (19:25, 72K)
@@ -96,7 +96,7 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 - Logrotate: daily ротация логов матчинга и системных
 - Бэкап всего проекта на сервере и локально (v1), v2 после фикса JS + парсинга
 
-### Баги (исправлено 5 штук)
+### Баги (исправлено 6 штук)
 
 1. **`/root/.hermes/` не существовал** — `resolver.py` падал с `FileNotFoundError` при попытке писать лог.  
    → `mkdir -p /root/.hermes`
@@ -112,6 +112,12 @@ ssh -i /opt/data/vpn-agent-bench/secrets/vpn-bench-ed25519 root@135.106.153.41 '
 
 5. **match.py читал не тот prefs.json** — жёсткий путь `/root/.hermes/vkusvill_prefs.json` (пустой) вместо `/opt/vkusvill-server/vkusvill_prefs.json`.  
    → `app.py` патчит `match.PREFS_PATH` на правильный
+
+6. **«Ничего не найдено» показывалось при найденных товарах** (2026-07-12) — две причины:
+   - `renderTree()` перезаписывал `nm.className` после `renderQuickMatch()`, возвращая `display:block`
+   - `renderQuickMatch()` показывал `noMatch` при ненайденных токенах, хотя `qm-unmatched` уже даёт обратную связь
+   → `renderTree`: guard при активном qmatch; `renderQuickMatch`: всегда прячет `nm`.  
+   → `sw.js` v1→v2: Service Worker кэшировал старый `index.html`, браузер не видел новый файл после деплоя
 
 ### Данные (сессия 2026-07-10)
 - Удалены 4 устаревших xml_id (сырники, пирожное, томаты, салат) — товары удалены из каталога ВкусВилл
@@ -212,3 +218,6 @@ MCP-сервер ВкусВилл (`mcp001.vkusvill.ru`) возвращает CO
 
 ### 16. Service Worker делает PWA офлайн-способным за 20 строк
 Без SW PWA при офлайне показывает ошибку браузера. С SW: кэшируем HTML при первом открытии → при офлайне страница грузится из кэша мгновенно. MCP-вызовы (корзина) требуют сеть, но весь каталог и матчинг работают без интернета. Паттерн: cache-first для своих файлов, network-only для API.
+
+### 17. Service Worker cache-first требует bump'а версии при каждом деплое HTML
+После деплоя исправленного `index.html` браузер продолжал показывать старую версию — Service Worker отдавал закэшированную копию (cache-first стратегия). `curl` на сервере показывал новый файл, но пользователь видел старый баг. Решение: bump `CACHE = 'vkusvill-vN'` → `vN+1` в `sw.js` при каждом деплое. Активация нового SW удаляет старый кэш и перезапрашивает HTML с сервера.
