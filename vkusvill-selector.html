@@ -170,7 +170,6 @@ function renderTree(){
     if(!f||!f.length)continue;
     any=true;
     h+='<div class="tree-row grp" data-cat="'+esc(cat)+'">'+
-      '<span class="arrow'+(expanded[cat]!==false?' open':'')+'">▶</span>'+
       '<span class="lbl">'+esc(cat)+'</span></div>'+
       '<div class="kids'+(expanded[cat]!==false?' open':'')+'">'+
       buildKids(f)+'</div>';
