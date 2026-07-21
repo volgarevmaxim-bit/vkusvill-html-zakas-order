@@ -1,6 +1,6 @@
 # VkusVill HTML Zakas Order 🛒
 
-Автономный HTML5-селектор товаров ВкусВилл с прямым вызовом MCP API и серверной частью на Flask.
+Автономный HTML5-селектор товаров ВкусВилл с прямым вызовом MCP API.
 
 **Живой сайт:** [vv.vedomir.ru/select/](https://vv.vedomir.ru/select/) — открытый доступ, без пароля.  
 **Зеркало на GitHub Pages:** [volgarevmaxim-bit.github.io/vkusvill-html-zakas-order/](https://volgarevmaxim-bit.github.io/vkusvill-html-zakas-order/)
@@ -29,59 +29,21 @@
 - Иконка 🛒
 - **Офлайн-каталог** — Service Worker кэширует страницу, всё работает без интернета (кроме создания корзины — нужен MCP)
 
-### 🗂️ Дерево категорий
-12 категорий с раскрытием/сворачиванием. Изначально все свёрнуты. При вводе в поиск — дерево скрывается, показывается панель быстрого матча.
+### 🗂️ Поиск
+Введи `нарзан йогурт мандарин` — трёхэтапный JS-матчинг встроен прямо в страницу, все 119 товаров и 106 алиасов уже в коде. Никаких внешних файлов.
 
 ### 🎨 UI
-- Тёмная тема
+- Тёмная тема, Google-style вёрстка (строка поиска по центру)
 - Адаптивная вёрстка (max-width 600px)
 - Копирование ссылки в буфер
-- Enter → фокус на кнопку «Собрать корзину»
-
-## Серверная часть (опционально)
-
-Flask-сервер для случаев, когда нужен прокси к MCP:
-
-| Метод | Путь | Описание |
-|---|---|---|
-| GET | `/` | HTML-фронтенд |
-| GET | `/health` | `{"ok":true}` |
-| POST | `/api/resolve` | items → матчинг → корзина |
-| POST | `/api/match` | Локальный матчинг одного запроса |
-| POST | `/api/cart` | Корзина по xml_id |
-
-### Деплой
-
-См. [DEPLOY.md](DEPLOY.md) — пошаговая инструкция.
-
-Кратко:
-
-```bash
-pip install -r requirements.txt
-cp vkusvill-cart.service /etc/systemd/system/
-systemctl enable --now vkusvill-cart
-```
-
-Стек: Python 3.12, Flask, Gunicorn, Nginx, Let's Encrypt, systemd.
+- Enter → авто-выбор товара → сразу кнопка «Собрать»
 
 ## Структура проекта
 
 ```
-vkusvill-selector.html    # Основной HTML5-селектор (автономный, открывается в браузере)
+vkusvill-selector.html    # Основной HTML5-селектор (автономный, все данные встроены)
 sw.js                     # Service Worker (PWA офлайн)
 manifest.json             # PWA manifest
-app.py                    # Flask-сервер
-mcp_client.py             # MCP-клиент для API ВкусВилл
-requirements.txt          # Python-зависимости
-
-skills/
-  vkusvill-quick-order/   # Alias-матчер (52 товара, мгновенный)
-  vkusvill-smart-cart/    # Трёхэтапный матчинг (substring → Левенштейн → триграммы)
-
-vkusvill-cart.service     # systemd unit
-healthcheck.sh            # Health check (systemd timer)
-categories.json           # Категории товаров
-vkusvill_prefs.json       # Товары (50 позиций)
 ```
 
 ## Как отдать друзьям

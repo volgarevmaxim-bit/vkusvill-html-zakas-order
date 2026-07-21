@@ -1,8 +1,0 @@
-[Unit]
-Description=VkusVill Cart health check
-After=network.target
-
-[Service]
-Type=oneshot
-ExecStart=/bin/bash /opt/vkusvill-server/healthcheck.sh
-User=root
