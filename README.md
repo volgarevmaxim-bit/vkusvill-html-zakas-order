@@ -2,7 +2,8 @@
 
 Автономный HTML5-селектор товаров ВкусВилл с прямым вызовом MCP API и серверной частью на Flask.
 
-**Живой сайт:** [vv.vedomir.ru/select/](https://vv.vedomir.ru/select/) — открытый доступ, без пароля.
+**Живой сайт:** [vv.vedomir.ru/select/](https://vv.vedomir.ru/select/) — открытый доступ, без пароля.  
+**Зеркало на GitHub Pages:** [volgarevmaxim-bit.github.io/vkusvill-html-zakas-order/](https://volgarevmaxim-bit.github.io/vkusvill-html-zakas-order/)
 
 ## Что это
 
@@ -85,7 +86,7 @@ vkusvill_prefs.json       # Товары (50 позиций)
 
 ## Как отдать друзьям
 
-1. Отправь ссылку: `https://vv.vedomir.ru/select/`
+1. Отправь ссылку: `https://vv.vedomir.ru/select/` (или GitHub Pages: `https://volgarevmaxim-bit.github.io/vkusvill-html-zakas-order/`)
 2. Они вводят продукты: `нарзан йогурт мандарин`
 3. Жмут Enter → «Собрать корзину» → ссылка скопирована
 4. Вставляют в браузер → корзина ВкусВилл
