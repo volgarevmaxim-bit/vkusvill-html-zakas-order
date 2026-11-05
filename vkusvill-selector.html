@@ -45,7 +45,7 @@ h1{color:#00d2a0;font-size:24px;text-align:center;margin:0 0 4px}
 <body>
 <script>
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/select/sw.js',{scope:'/select/'});
+  navigator.serviceWorker.register('./sw.js',{scope:'./'});
 }
 </script>
 <div class="app">
@@ -170,18 +170,50 @@ document.getElementById('clearSel').addEventListener('click',function(){
   updateUI();
 });
 
-var MCP_URL='https://mcp001.vkusvill.ru/mcp';
-function mcpCall(tool,args,cb){
+var MCP_DIRECT='https://mcp.vkusvill.ru/mcp';
+// Когда страница открыта с локального сервера — работаем с ним же (same-origin).
+var IS_LOCAL=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+var MCP_LOCAL=(IS_LOCAL?location.origin:'http://127.0.0.1:8770')+'/mcp';
+// Прокси можно задать ссылкой ?proxy=<url> (запоминается) или вписать сюда.
+var MCP_PROXY='';
+try{
+  var qp=new URLSearchParams(location.search).get('proxy');
+  if(qp){MCP_PROXY=qp;localStorage.setItem('vv_proxy',qp);}
+  else{MCP_PROXY=localStorage.getItem('vv_proxy')||'';}
+}catch(e){}
+function postMCP(url,payload,cb){
   var xhr=new XMLHttpRequest();
-  xhr.open('POST',MCP_URL,true);
+  xhr.open('POST',url,true);
   xhr.setRequestHeader('Content-Type','application/json');
   xhr.setRequestHeader('Accept','application/json, text/event-stream');
-  xhr.timeout=15000;
-  xhr.onload=function(){cb(null,xhr.responseText);};
-  xhr.onerror=function(){cb('Нет связи с сервером');};
-  xhr.ontimeout=function(){cb('Сервер не отвечает');};
-  xhr.send(JSON.stringify({jsonrpc:'2.0',id:Date.now(),method:'tools/call',
-    params:{name:tool,arguments:args}}));
+  xhr.timeout=20000;
+  xhr.onload=function(){
+    if(xhr.status>=200&&xhr.status<300){cb(null,xhr.responseText);}
+    else{cb('Сервер вернул '+xhr.status+'. '+String(xhr.responseText||'').slice(0,140),'http');}
+  };
+  xhr.onerror=function(){cb('нет сети','net');};
+  xhr.ontimeout=function(){cb('таймаут','net');};
+  xhr.send(payload);
+}
+function mcpCall(tool,args,cb){
+  var payload=JSON.stringify({jsonrpc:'2.0',id:Date.now(),method:'tools/call',
+    params:{name:tool,arguments:args}});
+  // Без прокси: сначала напрямую (сработает, если ВкусВилл починит CORS),
+  // затем через локальный прокси, если он запущен на этом компьютере.
+  var targets=MCP_PROXY?[MCP_PROXY]:(IS_LOCAL?[MCP_LOCAL]:[MCP_DIRECT,MCP_LOCAL]);
+  var i=0;
+  (function next(){
+    if(i>=targets.length){
+      cb('Нет связи с MCP. ВкусВилл блокирует прямые браузерные запросы (CORS), '+
+         'нужен прокси: запусти start-proxy.bat или открой страницу с ?proxy=<адрес>.');
+      return;
+    }
+    postMCP(targets[i++],payload,function(err,raw,kind){
+      if(!err){cb(null,raw);return;}
+      if(kind==='net'){next();return;}
+      cb(err);
+    });
+  })();
 }
 function parseCartLink(raw){
   try{
@@ -200,7 +232,7 @@ function parseCartLink(raw){
 document.getElementById('cartBtn').addEventListener('click',function(){
   var prods=[];
   for(var xid in selected){
-    prods.push({xml_id:parseInt(xid),q:selected[xid]});
+    prods.push({id:parseInt(xid),q:selected[xid]});
   }
   if(!prods.length)return;
   var btn=document.getElementById('cartBtn');
