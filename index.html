@@ -171,7 +171,9 @@ document.getElementById('clearSel').addEventListener('click',function(){
 });
 
 var MCP_DIRECT='https://mcp.vkusvill.ru/mcp';
-var MCP_LOCAL='http://127.0.0.1:8770/mcp';
+// Когда страница открыта с локального сервера — работаем с ним же (same-origin).
+var IS_LOCAL=/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+var MCP_LOCAL=(IS_LOCAL?location.origin:'http://127.0.0.1:8770')+'/mcp';
 // Прокси можно задать ссылкой ?proxy=<url> (запоминается) или вписать сюда.
 var MCP_PROXY='';
 try{
@@ -198,7 +200,7 @@ function mcpCall(tool,args,cb){
     params:{name:tool,arguments:args}});
   // Без прокси: сначала напрямую (сработает, если ВкусВилл починит CORS),
   // затем через локальный прокси, если он запущен на этом компьютере.
-  var targets=MCP_PROXY?[MCP_PROXY]:[MCP_DIRECT,MCP_LOCAL];
+  var targets=MCP_PROXY?[MCP_PROXY]:(IS_LOCAL?[MCP_LOCAL]:[MCP_DIRECT,MCP_LOCAL]);
   var i=0;
   (function next(){
     if(i>=targets.length){
