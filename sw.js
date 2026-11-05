@@ -1,5 +1,5 @@
 // Service worker for VkusVill Selector — caches app shell for offline use
-var CACHE = 'vkusvill-v9';
+var CACHE = 'vkusvill-v10';
 var FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', function(e) {
@@ -15,23 +15,24 @@ self.addEventListener('activate', function(e) {
   e.waitUntil(
     caches.keys().then(function(keys) {
       return Promise.all(keys.filter(function(k) { return k !== CACHE; })
-        .map(function(k) { return caches.delete(k); }));
+        .map(function(c) { return caches.delete(k); }));
     })
   );
   self.clients.claim();
 });
 
 self.addEventListener('fetch', function(e) {
-  // Network-first for API calls (MCP), cache-first for everything else
+  // MCP и локальный прокси — только сеть, без кэша; остальное — cache-first
   var url = new URL(e.request.url);
-  if (url.hostname === 'mcp001.vkusvill.ru') {
-    // API: network only, don't cache
+  if (url.hostname === 'mcp.vkusvill.ru' ||
+      url.hostname === 'mcp001.vkusvill.ru' ||
+      url.hostname === '127.0.0.1' ||
+      url.hostname === 'localhost') {
     return;
   }
   e.respondWith(
     caches.match(e.request).then(function(cached) {
       return cached || fetch(e.request).then(function(resp) {
-        // Cache successful responses for next time
         if (resp.ok && resp.type === 'basic') {
           var clone = resp.clone();
           caches.open(CACHE).then(function(c) { c.put(e.request, clone); });
