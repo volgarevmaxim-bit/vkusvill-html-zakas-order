@@ -189,10 +189,10 @@ function postMCP(url,payload,cb){
   xhr.timeout=20000;
   xhr.onload=function(){
     if(xhr.status>=200&&xhr.status<300){cb(null,xhr.responseText);}
-    else{cb('Сервер вернул '+xhr.status+'. '+String(xhr.responseText||'').slice(0,140),'http');}
+    else{cb('Сервер вернул '+xhr.status+'. '+String(xhr.responseText||'').slice(0,140),null,'http');}
   };
-  xhr.onerror=function(){cb('нет сети','net');};
-  xhr.ontimeout=function(){cb('таймаут','net');};
+  xhr.onerror=function(){cb('нет сети',null,'net');};
+  xhr.ontimeout=function(){cb('таймаут',null,'net');};
   xhr.send(payload);
 }
 function mcpCall(tool,args,cb){

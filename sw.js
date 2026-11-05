@@ -1,5 +1,5 @@
 // Service worker for VkusVill Selector — caches app shell for offline use
-var CACHE = 'vkusvill-v11';
+var CACHE = 'vkusvill-v12';
 var FILES = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', function(e) {
